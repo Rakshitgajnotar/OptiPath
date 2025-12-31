@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Algorithm Visualizer - TSP & Fuel Calculator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="main-container">
+    <h1 class="main-title">Graph Algorithm Visualizer</h1>
+    
+    <!-- Tab Navigation -->
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="tsp">TSP Solver</button>
+      <button class="tab-btn" data-tab="fuel">Fuel Optimization</button>
+    </div>
+
+    <!-- TSP Section -->
+    <div id="tsp-section" class="tab-content active">
+      <div class="section-container">
+        <h2>Traveling Salesman Problem</h2>
+
+        <div class="input-section">
+          <label>Node U <input type="number" id="tsp-nodeU" min="0" placeholder="0" /></label>
+          <label>Node V <input type="number" id="tsp-nodeV" min="0" placeholder="1" /></label>
+          <label>Weight <input type="number" id="tsp-weight" min="1" placeholder="10" /></label>
+          <button id="tsp-addEdgeBtn" class="btn btn-primary">Add Edge</button>
+        </div>
+
+        <h3>Edge List</h3>
+        <div class="table-container">
+          <table id="tsp-edgesTable">
+            <thead>
+              <tr><th>U</th><th>V</th><th>Weight</th></tr>
+            </thead>
+            <tbody id="tsp-edgesBody"></tbody>
+          </table>
+        </div>
+
+        <div class="save-section">
+          <label>Total Nodes <input type="number" id="tsp-nodesCount" min="2" placeholder="4" /></label>
+          <button id="tsp-saveBtn" class="btn btn-success">Save Graph</button>
+          <button id="tsp-simulateBtn" class="btn btn-warning">Find Optimal Path</button>
+        </div>
+
+        <div id="tsp-resultDisplay" class="result-display"></div>
+
+        <canvas id="tsp-canvas" width="700" height="600"></canvas>
+      </div>
+    </div>
+
+    <!-- Fuel Calculator Section -->
+    <div id="fuel-section" class="tab-content">
+      <div class="section-container">
+        <h2>Minimum Fuel Calculator</h2>
+
+        <div class="input-section">
+          <label>From Node <input type="number" id="fuel-from" min="0" placeholder="0" /></label>
+          <label>To Node <input type="number" id="fuel-to" min="0" placeholder="1" /></label>
+          <label>Distance <input type="number" id="fuel-weight" min="1" placeholder="5" /></label>
+          <button id="fuel-addEdgeBtn" class="btn btn-primary">Add Edge</button>
+        </div>
+
+        <h3>Edge List</h3>
+        <div class="table-container">
+          <table id="fuel-edgesTable">
+            <thead>
+              <tr><th>From</th><th>To</th><th>Weight</th></tr>
+            </thead>
+            <tbody id="fuel-edgesBody"></tbody>
+          </table>
+        </div>
+
+        <div class="save-section">
+          <label>Seats per Car <input type="number" id="fuel-seats" min="1" value="1" placeholder="2" /></label>
+          <button id="fuel-saveBtn" class="btn btn-success">Save Graph</button>
+          <button id="fuel-calculateBtn" class="btn btn-warning">Calculate & Simulate</button>
+        </div>
+
+        <div class="results-section">
+          <p id="fuel-result">Minimum Fuel: 0</p>
+          <ul id="fuel-pathsList"></ul>
+        </div>
+
+        <div class="simulation-controls">
+          <button id="fuel-prevStep" class="btn btn-info">← Back</button>
+          <button id="fuel-nextStep" class="btn btn-info">Next →</button>
+          <p>Step: <span id="fuel-stepNum">0</span> / <span id="fuel-totalSteps">0</span></p>
+        </div>
+
+        <canvas id="fuel-canvas" width="700" height="500"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
