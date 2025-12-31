@@ -1,0 +1,24 @@
+{
+  "name": "daa-algorithm-visualizer",
+  "version": "1.0.0",
+  "description": "Merged project combining TSP and Fuel Calculator visualizations",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "tsp",
+    "traveling-salesman",
+    "fuel-calculator",
+    "graph-algorithms",
+    "visualization"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0"
+  }
+}
