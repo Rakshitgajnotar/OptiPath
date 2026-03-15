@@ -8,7 +8,7 @@ A merged web application that visualizes two important graph algorithms:
 
 ### Installation
 ```bash
-cd "d:\5th Sem\DAA\Innovative assignment\MergedProjects\MergedApp"
+cd "c:\Users\Admin\OneDrive\Desktop\Projects\OptiPath-main"
 npm install
 ```
 
