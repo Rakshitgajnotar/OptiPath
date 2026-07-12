@@ -11,7 +11,13 @@ const PORT = 3000;
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+
+// Serve Vite build output (production) or legacy public/ folder
+const distPath = path.join(__dirname, 'dist');
+const publicPath = path.join(__dirname, 'public');
+const fs = require('fs');
+const staticDir = fs.existsSync(distPath) ? distPath : publicPath;
+app.use(express.static(staticDir));
 
 // ============== TSP ENDPOINTS ==============
 
@@ -68,6 +74,11 @@ app.post('/fuel/calculate', (req, res) => {
     console.error("Error calculating fuel:", err);
     res.status(500).json({ error: "Internal server error" });
   }
+});
+
+// SPA fallback — serve index.html for all non-API routes (React Router)
+app.get('/{*path}', (req, res) => {
+  res.sendFile(path.join(staticDir, 'index.html'));
 });
 
 app.listen(PORT, () => {

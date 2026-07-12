@@ -1,0 +1,117 @@
+/* ─── Button Component ─── */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-family);
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background var(--transition-fast),
+    box-shadow var(--transition-fast),
+    color var(--transition-fast);
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  user-select: none;
+  letter-spacing: -0.01em;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* ─── Sizes ─── */
+.sm {
+  padding: 6px 14px;
+  font-size: var(--text-xs);
+  border-radius: var(--radius-sm);
+}
+
+.md {
+  padding: 10px 20px;
+  font-size: var(--text-sm);
+}
+
+.lg {
+  padding: 14px 28px;
+  font-size: var(--text-base);
+  border-radius: var(--radius-lg);
+}
+
+/* ─── Variants ─── */
+.primary {
+  background: var(--color-primary);
+  color: #fff;
+}
+.primary:hover:not(:disabled) {
+  background: var(--color-primary-dark);
+  box-shadow: var(--shadow-glow-primary);
+}
+
+.secondary {
+  background: var(--color-secondary);
+  color: #fff;
+}
+.secondary:hover:not(:disabled) {
+  background: var(--color-secondary-dark);
+  box-shadow: var(--shadow-glow-secondary);
+}
+
+.accent {
+  background: var(--color-accent);
+  color: #fff;
+}
+.accent:hover:not(:disabled) {
+  background: var(--color-accent-dark);
+  box-shadow: var(--shadow-glow-accent);
+}
+
+.ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--surface-3);
+}
+.ghost:hover:not(:disabled) {
+  background: var(--surface-2);
+  color: var(--text-primary);
+  border-color: var(--surface-4);
+}
+
+.danger {
+  background: var(--color-error);
+  color: #fff;
+}
+.danger:hover:not(:disabled) {
+  background: #DC2626;
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+}
+
+/* ─── Full Width ─── */
+.fullWidth {
+  width: 100%;
+}
+
+/* ─── Loading Spinner ─── */
+.loading {
+  pointer-events: none;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

@@ -1,0 +1,118 @@
+/* ─── ResultPanel ─── */
+
+.panel {
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  overflow: hidden;
+}
+
+.default {
+  background: linear-gradient(135deg, var(--color-secondary-light), rgba(6, 182, 212, 0.04));
+  border: 1px solid rgba(6, 182, 212, 0.25);
+}
+
+.accent {
+  background: linear-gradient(135deg, var(--color-accent-light), rgba(16, 185, 129, 0.04));
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.title {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-3);
+}
+
+.stringValue {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Path chain (badges) */
+.pathChain {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1);
+  margin-top: var(--space-4);
+}
+
+.pathItem {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.arrow {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
+
+/* Detailed path list */
+.pathList {
+  list-style: none;
+  margin-top: var(--space-4);
+  max-height: 200px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.pathListItem {
+  padding: var(--space-3) var(--space-4);
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  border-left: 3px solid var(--color-primary);
+  transition: all var(--transition-fast);
+}
+
+.pathListItem:hover {
+  background: rgba(0, 0, 0, 0.25);
+  transform: translateX(4px);
+  border-left-color: var(--color-primary-hover);
+}
+
+/* Error */
+.errorPanel {
+  background: linear-gradient(135deg, var(--color-error-light), rgba(239, 68, 68, 0.04));
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.errorContent {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.errorIcon {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  background: var(--color-error);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: var(--text-sm);
+  flex-shrink: 0;
+}
+
+.errorTitle {
+  font-weight: 700;
+  color: var(--color-error);
+  font-size: var(--text-base);
+}
+
+.errorMsg {
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  margin-top: var(--space-1);
+}

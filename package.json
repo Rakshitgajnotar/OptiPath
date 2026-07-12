@@ -1,24 +1,39 @@
 {
-  "name": "daa-algorithm-visualizer",
-  "version": "1.0.0",
-  "description": "Merged project combining TSP and Fuel Calculator visualizations",
+  "name": "optipath",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Premium graph algorithm visualizer — TSP Solver & Fuel Optimizer with interactive visualizations",
   "main": "server.js",
   "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
     "start": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "server": "node server.js"
   },
   "keywords": [
     "tsp",
     "traveling-salesman",
     "fuel-calculator",
     "graph-algorithms",
-    "visualization"
+    "visualization",
+    "react"
   ],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^2.2.0",
     "cors": "^2.8.5",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "framer-motion": "^11.3.0",
+    "lucide-react": "^0.441.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-hot-toast": "^2.4.1",
+    "react-router-dom": "^6.26.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.0",
+    "vite": "^5.4.0"
   }
 }
