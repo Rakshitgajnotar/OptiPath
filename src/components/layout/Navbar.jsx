@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, GitGraph } from 'lucide-react';
+import { Menu, X, GitGraph, Sun, Moon } from 'lucide-react';
 import { NAV_ITEMS } from '../../utils/constants';
+import { useTheme } from '../../context/ThemeContext';
 import styles from './Navbar.module.css';
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <header className={styles.header}>
@@ -37,14 +39,52 @@ export default function Navbar() {
           ))}
         </ul>
 
-        {/* Mobile menu button */}
-        <button
-          className={styles.menuBtn}
-          onClick={() => setMobileOpen((o) => !o)}
-          aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-        >
-          {mobileOpen ? <X size={22} /> : <Menu size={22} />}
-        </button>
+        <div className={styles.rightActions}>
+          {/* Theme toggle */}
+          <motion.button
+            className={styles.themeBtn}
+            onClick={toggleTheme}
+            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+          >
+            <AnimatePresence mode="wait" initial={false}>
+              {theme === 'dark' ? (
+                <motion.span
+                  key="sun"
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  style={{ display: 'flex' }}
+                >
+                  <Sun size={18} />
+                </motion.span>
+              ) : (
+                <motion.span
+                  key="moon"
+                  initial={{ rotate: 90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: -90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  style={{ display: 'flex' }}
+                >
+                  <Moon size={18} />
+                </motion.span>
+              )}
+            </AnimatePresence>
+          </motion.button>
+
+          {/* Mobile menu button */}
+          <button
+            className={styles.menuBtn}
+            onClick={() => setMobileOpen((o) => !o)}
+            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+          >
+            {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
       </nav>
 
       {/* Mobile drawer */}
@@ -87,6 +127,15 @@ export default function Navbar() {
                   </motion.li>
                 ))}
               </ul>
+
+              {/* Theme toggle in mobile drawer */}
+              <button
+                className={styles.drawerThemeBtn}
+                onClick={toggleTheme}
+              >
+                {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+                <span>{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>
+              </button>
             </motion.div>
           </>
         )}

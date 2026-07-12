@@ -1,7 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { tspAPI } from '../services/api';
-import { forceLayout } from '../utils/graphLayout';
 import { TSP_THEME } from '../utils/constants';
 
 export default function useTSP() {
@@ -27,29 +26,26 @@ export default function useTSP() {
     })();
   }, []);
 
-  /* Compute graph nodes & edges for GraphCanvas */
+  /* Compute graph nodes & edges for GraphCanvas — circular layout */
   const graphData = useCallback(() => {
     if (nodeCount === 0 && edges.length === 0) {
       return { nodes: [], edges: [] };
     }
 
     const n = nodeCount || (edges.length > 0 ? Math.max(...edges.flat()) + 1 : 0);
-    const positions = forceLayout(
-      edges.map(([u, v]) => [u, v]),
-      { width: 600, height: 400 }
-    );
 
-    /* Ensure all nodes 0..n-1 have positions */
+    /* Circular layout with dynamic radius */
+    const radius = Math.max(220, n * 45);
+    const cx = radius + 80; // center x with margin
+    const cy = radius + 80; // center y with margin
+
     const nodes = [];
     for (let i = 0; i < n; i++) {
-      const pos = positions[i] || {
-        x: 300 + 150 * Math.cos((i / n) * 2 * Math.PI),
-        y: 200 + 150 * Math.sin((i / n) * 2 * Math.PI),
-      };
+      const angle = (2 * Math.PI * i) / n - Math.PI / 2; // start from top
       nodes.push({
         id: i,
-        x: pos.x,
-        y: pos.y,
+        x: cx + radius * Math.cos(angle),
+        y: cy + radius * Math.sin(angle),
         active: highlightPath.includes(i),
       });
     }

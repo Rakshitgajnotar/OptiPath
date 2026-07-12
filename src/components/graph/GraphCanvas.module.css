@@ -7,19 +7,50 @@
   background: #0a0e1a;
   border: 1px solid var(--surface-3);
   overflow: hidden;
-  min-height: 350px;
+  min-height: 400px;
   box-shadow:
     0 0 0 1px rgba(99, 102, 241, 0.06),
     0 8px 32px rgba(0, 0, 0, 0.4);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+:global([data-theme='light']) .wrapper {
+  background: #F0F2F8;
+  box-shadow:
+    0 0 0 1px rgba(99, 102, 241, 0.08),
+    0 4px 16px rgba(0, 0, 0, 0.06);
 }
 
 .svg {
   display: block;
   width: 100%;
   height: 100%;
-  min-height: 350px;
+  min-height: 400px;
   user-select: none;
   touch-action: none;
+}
+
+/* Smooth node movement (300ms) */
+.nodeGroup {
+  transition: transform 0.3s ease;
+}
+
+.nodeCircle {
+  transition: fill 0.3s ease, stroke 0.3s ease;
+}
+
+.nodeGlow {
+  transition: opacity 0.3s ease;
+}
+
+/* Smooth edge transitions */
+.edgeLine {
+  transition: stroke 0.3s ease, stroke-width 0.3s ease;
+}
+
+/* Edge labels */
+.edgeLabel {
+  transition: transform 0.3s ease;
 }
 
 /* Animated dash for active edges */
@@ -66,11 +97,11 @@
 
 @media (max-width: 768px) {
   .wrapper {
-    min-height: 280px;
+    min-height: 320px;
   }
 
   .svg {
-    min-height: 280px;
+    min-height: 320px;
   }
 
   .hint {

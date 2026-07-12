@@ -20,7 +20,7 @@ export default function Footer() {
           <Link to="/tsp">TSP Solver</Link>
           <Link to="/fuel">Fuel Optimizer</Link>
           <a
-            href="https://github.com"
+            href="https://github.com/Rakshitgajnotar/OptiPath"
             target="_blank"
             rel="noopener noreferrer"
             className={styles.ghLink}

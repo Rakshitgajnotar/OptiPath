@@ -152,7 +152,8 @@ export default function FuelPage() {
               <Input
                 label="Seats per Car"
                 value={seats}
-                onChange={(e) => setSeats(parseInt(e.target.value) || 1)}
+                onChange={(e) => setSeats(e.target.value === '' ? '' : parseInt(e.target.value) || '')}
+                onBlur={() => setSeats((prev) => (prev === '' || prev < 1) ? 1 : prev)}
                 placeholder="2"
                 min={1}
                 id="fuel-seats"

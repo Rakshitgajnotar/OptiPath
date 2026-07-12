@@ -8,6 +8,11 @@
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--surface-2);
+  transition: background 0.3s ease;
+}
+
+:global([data-theme='light']) .header {
+  background: rgba(248, 249, 252, 0.85);
 }
 
 .nav {
@@ -164,4 +169,57 @@
   .menuBtn {
     display: flex;
   }
+}
+
+/* ─── Right Actions (theme toggle + mobile menu) ─── */
+.rightActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  z-index: 110;
+}
+
+/* Theme toggle button */
+.themeBtn {
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--surface-3);
+  background: var(--surface-2);
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.themeBtn:hover {
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+/* Drawer theme button */
+.drawerThemeBtn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: 14px 16px;
+  margin-top: var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--surface-3);
+  background: var(--surface-2);
+  color: var(--text-secondary);
+  font-family: var(--font-family);
+  font-size: var(--text-base);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.drawerThemeBtn:hover {
+  background: var(--color-primary-light);
+  color: var(--color-primary);
 }
