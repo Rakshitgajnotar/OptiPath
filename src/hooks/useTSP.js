@@ -13,18 +13,7 @@ export default function useTSP() {
   const [highlightPath, setHighlightPath] = useState([]);
   const [animStep, setAnimStep] = useState(-1);
 
-  /* Load saved data on mount */
-  useEffect(() => {
-    (async () => {
-      try {
-        const data = await tspAPI.getData();
-        setEdges(data.roads || []);
-        setNodeCount(data.n || 0);
-      } catch (err) {
-        console.error('Failed to load TSP data:', err);
-      }
-    })();
-  }, []);
+
 
   /* Compute graph nodes & edges for GraphCanvas — circular layout */
   const graphData = useCallback(() => {
@@ -32,7 +21,7 @@ export default function useTSP() {
       return { nodes: [], edges: [] };
     }
 
-    const n = nodeCount || (edges.length > 0 ? Math.max(...edges.flat()) + 1 : 0);
+    const n = nodeCount || (edges.length > 0 ? Math.max(...edges.map(([u, v]) => Math.max(u, v))) + 1 : 0);
 
     /* Circular layout with dynamic radius */
     const radius = Math.max(220, n * 45);

@@ -18,17 +18,7 @@ export default function useFuel() {
   const [isPlaying, setIsPlaying] = useState(false);
   const playInterval = useRef(null);
 
-  /* Load saved data on mount */
-  useEffect(() => {
-    (async () => {
-      try {
-        const data = await fuelAPI.getEdges();
-        if (Array.isArray(data)) setEdges(data);
-      } catch (err) {
-        console.error('Failed to load fuel edges:', err);
-      }
-    })();
-  }, []);
+
 
   /* Auto-play logic */
   useEffect(() => {

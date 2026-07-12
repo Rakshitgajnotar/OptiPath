@@ -251,21 +251,21 @@ export default function GraphCanvas({
       >
         {/* Defs for filters */}
         <defs>
-          <filter id="glow-highlight" x="-50%" y="-50%" width="200%" height="200%">
+          <filter id="glow-highlight" filterUnits="userSpaceOnUse" x="-20%" y="-20%" width="140%" height="140%">
             <feGaussianBlur stdDeviation="6" result="blur" />
             <feMerge>
               <feMergeNode in="blur" />
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
-          <filter id="glow-node" x="-50%" y="-50%" width="200%" height="200%">
+          <filter id="glow-node" filterUnits="userSpaceOnUse" x="-20%" y="-20%" width="140%" height="140%">
             <feGaussianBlur stdDeviation="4" result="blur" />
             <feMerge>
               <feMergeNode in="blur" />
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
-          <filter id="label-shadow" x="-20%" y="-20%" width="140%" height="140%">
+          <filter id="label-shadow" filterUnits="userSpaceOnUse" x="-20%" y="-20%" width="140%" height="140%">
             <feDropShadow dx="0" dy="1" stdDeviation="2" floodColor="#000" floodOpacity="0.5" />
           </filter>
         </defs>
@@ -285,7 +285,22 @@ export default function GraphCanvas({
           opacity="0.5"
         />
 
-        {/* Edges — lines only */}
+        {/* Debugging rendering logs as requested */}
+        {(() => {
+          console.log(`[GraphCanvas] Total edges to render: ${edges.length}`);
+          edges.forEach((edge, idx) => {
+            const src = nodeMap[edge.source];
+            const tgt = nodeMap[edge.target];
+            if (src && tgt) {
+              console.log(`  - SVG Line ${idx}: Node ${edge.source} (${src.x.toFixed(1)}, ${src.y.toFixed(1)}) ↔ Node ${edge.target} (${tgt.x.toFixed(1)}, ${tgt.y.toFixed(1)}) | weight: ${edge.weight} | label rendered: ${edge.weight !== undefined}`);
+            } else {
+              console.warn(`  - Missing node coordinates for Edge ${idx}: source ${edge.source}, target ${edge.target}`);
+            }
+          });
+          return null;
+        })()}
+
+        {/* Edges — Render line and label together inside the same group to guarantee exact pairing */}
         {edges.map((edge, i) => {
           const src = nodeMap[edge.source];
           const tgt = nodeMap[edge.target];
@@ -294,8 +309,15 @@ export default function GraphCanvas({
           const isHighlighted = edge.highlighted;
           const isActive = edge.active;
 
+          /* Compute label details */
+          const pos = labelPositions[i];
+          const hasLabel = edge.weight !== undefined && pos && !pos.skip;
+          const textStr = hasLabel ? String(edge.weight) : '';
+          const labelW = Math.max(36, textStr.length * 10 + 16);
+          const labelH = 24;
+
           return (
-            <g key={`edge-${i}`}>
+            <g key={`edge-group-${i}`}>
               {/* Edge line */}
               <line
                 x1={src.x}
@@ -318,6 +340,7 @@ export default function GraphCanvas({
                 filter={isHighlighted ? 'url(#glow-highlight)' : undefined}
                 className={styles.edgeLine}
               />
+              
               {/* Animated dash for active */}
               {isActive && (
                 <line
@@ -332,46 +355,35 @@ export default function GraphCanvas({
                   className={styles.dashAnimate}
                 />
               )}
-            </g>
-          );
-        })}
 
-        {/* Edge weight labels — rendered after edges, before nodes */}
-        {edges.map((edge, i) => {
-          if (edge.weight === undefined) return null;
-          const pos = labelPositions[i];
-          if (!pos || pos.skip) return null;
-
-          const isHighlighted = edge.highlighted;
-          const textStr = String(edge.weight);
-          const labelW = Math.max(36, textStr.length * 10 + 16);
-          const labelH = 24;
-
-          return (
-            <g key={`label-${i}`} className={styles.edgeLabel} filter="url(#label-shadow)">
-              <rect
-                x={pos.x - labelW / 2}
-                y={pos.y - labelH / 2}
-                width={labelW}
-                height={labelH}
-                rx={8}
-                fill={defaults.edgeWeightBg}
-                stroke={isHighlighted ? defaults.highlightStroke : defaults.edgeWeightBorder}
-                strokeWidth={isHighlighted ? 1.5 : 1}
-                opacity={0.95}
-              />
-              <text
-                x={pos.x}
-                y={pos.y}
-                textAnchor="middle"
-                dominantBaseline="central"
-                fill={isHighlighted ? defaults.highlightStroke : defaults.edgeWeightText}
-                fontSize="12"
-                fontWeight="700"
-                fontFamily="Inter, sans-serif"
-              >
-                {edge.weight}
-              </text>
+              {/* Weight label — always rendered inside the same group and only when the line exists */}
+              {hasLabel && (
+                <g className={styles.edgeLabel} filter="url(#label-shadow)">
+                  <rect
+                    x={pos.x - labelW / 2}
+                    y={pos.y - labelH / 2}
+                    width={labelW}
+                    height={labelH}
+                    rx={8}
+                    fill={defaults.edgeWeightBg}
+                    stroke={isHighlighted ? defaults.highlightStroke : defaults.edgeWeightBorder}
+                    strokeWidth={isHighlighted ? 1.5 : 1}
+                    opacity={0.95}
+                  />
+                  <text
+                    x={pos.x}
+                    y={pos.y}
+                    textAnchor="middle"
+                    dominantBaseline="central"
+                    fill={isHighlighted ? defaults.highlightStroke : defaults.edgeWeightText}
+                    fontSize="12"
+                    fontWeight="700"
+                    fontFamily="Inter, sans-serif"
+                  >
+                    {edge.weight}
+                  </text>
+                </g>
+              )}
             </g>
           );
         })}
@@ -459,7 +471,7 @@ export default function GraphCanvas({
       </svg>
 
       {/* Zoom hint */}
-      <div className={styles.hint}>Scroll to zoom · Drag to pan</div>
+      <div className={styles.hint}>Drag to pan</div>
     </div>
   );
 }
